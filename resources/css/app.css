@@ -244,3 +244,67 @@
         line-height: 1.3;
     }
 }
+
+/*
+ * Motion. Animation targets start hidden only when JS is running (html.js, set inline in
+ * <head>), so the page is fully readable without JavaScript.
+ */
+@layer base {
+    .js [data-split] {
+        visibility: hidden;
+    }
+
+    .js [data-reveal] {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+
+    .is-wiping [data-page-wipe] {
+        transform: scaleY(1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .js [data-reveal] {
+            transform: none;
+        }
+
+        *,
+        *::before,
+        *::after {
+            transition-duration: 0.01ms !important;
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+        }
+    }
+}
+
+/* Cross-document View Transitions: the new page is revealed by a wipe from the bottom. */
+@media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+        navigation: auto;
+    }
+
+    ::view-transition-old(root) {
+        animation: 0.5s var(--ease-out-expo) both page-out;
+    }
+
+    ::view-transition-new(root) {
+        animation: 0.7s var(--ease-out-expo) both page-in;
+    }
+}
+
+@keyframes page-out {
+    to {
+        opacity: 0.4;
+        transform: translateY(-4%);
+    }
+}
+
+@keyframes page-in {
+    from {
+        clip-path: inset(100% 0 0 0);
+    }
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}

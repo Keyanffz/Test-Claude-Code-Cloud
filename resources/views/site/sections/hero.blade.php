@@ -6,7 +6,7 @@
     $nameSize = mb_strlen($profile->displayName()) <= 6 ? 'text-[clamp(7rem,30vw,26rem)] leading-[0.78] tracking-[-0.04em]' : 'text-display';
 @endphp
 
-<section class="container-page flex min-h-[calc(100svh-3.5rem)] flex-col pt-6 pb-8 md:pt-8" aria-labelledby="hero-title">
+<section class="container-page flex min-h-[80svh] flex-col pt-6 pb-8 md:min-h-[calc(100svh-3.5rem)] md:pt-8" aria-labelledby="hero-title">
     <div class="grid-page label-mono text-muted" data-reveal>
         <p class="col-span-6 md:col-span-4">{{ $profile->name }}</p>
         @if ($profile->location)

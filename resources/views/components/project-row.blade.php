@@ -6,7 +6,7 @@
         class="grid-page items-baseline gap-y-3 py-6 md:py-8"
         @if ($project->thumbnail_path) data-preview-src="{{ Storage::url($project->thumbnail_path) }}" @endif
     >
-        <span class="label-mono col-span-2 text-muted tabular-nums md:col-span-1">{{ $index }}</span>
+        <span class="label-mono col-span-2 self-start text-muted tabular-nums md:col-span-1 md:self-auto">{{ $index }}</span>
 
         @if ($project->thumbnail_path)
             <div class="col-span-10 overflow-hidden rounded-sm bg-raised md:hidden">

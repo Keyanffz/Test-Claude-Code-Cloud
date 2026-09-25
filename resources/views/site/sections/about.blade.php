@@ -4,7 +4,7 @@
 
     <div class="grid-page mt-10 gap-y-12 md:mt-16">
         @if ($profile->photo_path)
-            <figure class="col-span-8 overflow-hidden rounded-sm bg-raised sm:col-span-5 md:col-span-3" data-parallax-frame>
+            <figure class="col-span-8 self-start overflow-hidden rounded-sm bg-raised sm:col-span-5 md:col-span-3" data-parallax-frame>
                 <x-image :path="$profile->photo_path" preset="profile_photo" :alt="$profile->name" sizes="(min-width: 768px) 25vw, 66vw" class="h-auto w-full scale-110 object-cover" data-parallax />
             </figure>
         @endif
