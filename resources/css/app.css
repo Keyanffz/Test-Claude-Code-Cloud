@@ -1,0 +1,72 @@
+@import 'tailwindcss';
+@import '@fontsource/instrument-serif/latin-400.css';
+@import '@fontsource/instrument-serif/latin-400-italic.css';
+@import '@fontsource-variable/geist/wght.css';
+@import '@fontsource-variable/geist-mono/wght.css';
+
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* Raw palette. Semantic tokens below are what components use. */
+@theme {
+    --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+    --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
+    --font-mono: 'Geist Mono Variable', ui-monospace, SFMono-Regular, monospace;
+
+    --color-stone-50: #f2f0eb;
+    --color-stone-200: #ece9e3;
+    --color-stone-300: #d8d4cb;
+    --color-stone-500: #9a968e;
+    --color-stone-600: #6b6862;
+    --color-stone-800: #2a2926;
+    --color-stone-900: #1a1918;
+    --color-stone-950: #111110;
+    --color-orange-700: #c2410c;
+    --color-orange-400: #ff6a3d;
+
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out-power3: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+    --text-display: clamp(3.5rem, 11vw, 11rem);
+    --text-display--line-height: 0.9;
+    --text-display--letter-spacing: -0.02em;
+    --text-title: clamp(2.25rem, 5.5vw, 5rem);
+    --text-title--line-height: 0.95;
+    --text-title--letter-spacing: -0.015em;
+    --text-label: 0.6875rem;
+    --text-label--line-height: 1rem;
+    --text-label--letter-spacing: 0.08em;
+}
+
+/* Semantic tokens swap per theme; utilities like bg-paper / text-ink follow automatically. */
+@theme inline {
+    --color-paper: var(--paper);
+    --color-ink: var(--ink);
+    --color-muted: var(--muted);
+    --color-line: var(--line);
+    --color-signal: var(--signal);
+    --color-raised: var(--raised);
+}
+
+:root {
+    --paper: var(--color-stone-50);
+    --ink: var(--color-stone-950);
+    --muted: var(--color-stone-600);
+    --line: var(--color-stone-300);
+    --signal: var(--color-orange-700);
+    --raised: var(--color-stone-200);
+    color-scheme: light;
+}
+
+[data-theme='dark'] {
+    --paper: var(--color-stone-950);
+    --ink: #eceae4;
+    --muted: var(--color-stone-500);
+    --line: var(--color-stone-800);
+    --signal: var(--color-orange-400);
+    --raised: var(--color-stone-900);
+    color-scheme: dark;
+}
