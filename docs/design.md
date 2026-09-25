@@ -48,7 +48,7 @@ Rules:
 - Display headlines: `letter-spacing: -0.02em`, `line-height: 0.9`, never bold (the serif has one weight — that's the point).
 - Body: 16–18px, `line-height: 1.55`, max 64ch.
 - Labels: Geist Mono 11–12px, uppercase, `letter-spacing: 0.08em`.
-- `font-feature-settings`: `"ss01", "cv11"` on Geist (single-storey a is off, straight-sided alternates on), `"tnum"` wherever numbers stack (years, counters, table columns).
+- `font-feature-settings`: `"kern", "liga", "calt"` globally; `"tnum"` wherever numbers stack (years, counters, table columns); `"case"` on uppercase mono labels so punctuation and parentheses sit at cap height.
 - Italic Instrument Serif is the only emphasis device in headlines.
 
 ## Grid
@@ -75,7 +75,7 @@ Motion should explain structure (things enter in reading order) and reward atten
 
 - Durations 0.4–0.9s. Default ease `power3.out`; hero and page wipe use `expo.out` / `expo.inOut`.
 - Only `transform` and `opacity` are animated. No width/height/top/left.
-- Hero headline: word-level mask reveal (`yPercent: 110 → 0`), 0.06s stagger.
+- Hero headline: word-level mask reveal (`translateY(110%) → 0`), 0.06s stagger. Done in CSS so the LCP element never waits on JS (see decisions.md).
 - Scroll reveal: 24px rise + fade, triggered once at 85% viewport.
 - Project hover preview: follows cursor with `quickTo` (0.5s lag), desktop + fine pointer only.
 - Magnetic CTA: max 12px pull.
