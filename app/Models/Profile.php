@@ -27,7 +27,7 @@ class Profile extends Model
 
     public function displayName(): string
     {
-        return $this->nickname ?: $this->name;
+        return $this->nickname ?: $this->name ?: config('app.name');
     }
 
     protected function storedFileAttributes(): array

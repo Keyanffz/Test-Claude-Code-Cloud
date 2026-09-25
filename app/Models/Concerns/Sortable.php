@@ -23,7 +23,7 @@ trait Sortable
     /**
      * @param  array<int, int>  $ids  Ids in their new display order.
      */
-    public static function reorder(array $ids): void
+    public static function saveOrder(array $ids): void
     {
         DB::transaction(function () use ($ids) {
             foreach (array_values($ids) as $position => $id) {

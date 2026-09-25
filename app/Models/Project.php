@@ -34,7 +34,7 @@ class Project extends Model
     protected static function booted(): void
     {
         // Gallery rows are removed through Eloquent (not the FK cascade) so their files go too.
-        static::deleting(fn (self $project) => $project->images->each->delete());
+        static::deleting(fn (self $project) => $project->images()->get()->each->delete());
     }
 
     public function images(): HasMany

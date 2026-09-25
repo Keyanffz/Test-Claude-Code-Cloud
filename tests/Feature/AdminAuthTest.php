@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\RateLimiter;
 
 it('redirects guests away from the admin area', function (string $uri) {
     $this->get($uri)->assertRedirect(route('admin.login'));
-})->with(['/admin']);
+})->with(['/admin', '/admin/projects', '/admin/profile/edit', '/admin/messages', '/admin/skills', '/admin/seo/edit']);
 
 it('does not expose a registration page', function () {
     $this->get('/register')->assertNotFound();
