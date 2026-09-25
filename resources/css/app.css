@@ -152,3 +152,95 @@
         background-size: 100% 1px;
     }
 }
+
+/* Rendered markdown (project descriptions, long bio, admin preview). */
+@utility prose-content {
+    line-height: 1.65;
+
+    & > * + * {
+        margin-top: 1em;
+    }
+    & h2,
+    & h3 {
+        margin-top: 2em;
+        font-family: var(--font-mono);
+        font-size: var(--text-label);
+        letter-spacing: var(--text-label--letter-spacing);
+        text-transform: uppercase;
+        color: var(--muted);
+    }
+    & h2 + *,
+    & h3 + * {
+        margin-top: 0.75em;
+    }
+    & a {
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+    }
+    & a:hover {
+        color: var(--signal);
+    }
+    & strong {
+        font-weight: 600;
+    }
+    & em {
+        font-family: var(--font-serif);
+        font-size: 1.15em;
+        line-height: 1;
+    }
+    & ul,
+    & ol {
+        padding-left: 1.25em;
+    }
+    & ul {
+        list-style: none;
+    }
+    & ul > li {
+        position: relative;
+    }
+    & ul > li::before {
+        content: '';
+        position: absolute;
+        top: 0.8em;
+        left: -1.1em;
+        width: 0.5em;
+        height: 1px;
+        background: currentColor;
+    }
+    & ol {
+        list-style: decimal-leading-zero;
+    }
+    & ol > li::marker {
+        font-family: var(--font-mono);
+        font-size: 0.8em;
+        color: var(--muted);
+    }
+    & li + li {
+        margin-top: 0.4em;
+    }
+    & code {
+        font-family: var(--font-mono);
+        font-size: 0.875em;
+        background: var(--raised);
+        padding: 0.1em 0.35em;
+        border-radius: 2px;
+    }
+    & pre {
+        overflow-x: auto;
+        background: var(--raised);
+        padding: 1em;
+        border-radius: 2px;
+    }
+    & pre code {
+        background: none;
+        padding: 0;
+    }
+    & blockquote {
+        border-left: 1px solid var(--ink);
+        padding-left: 1em;
+        font-family: var(--font-serif);
+        font-size: 1.35em;
+        line-height: 1.3;
+    }
+}

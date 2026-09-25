@@ -24,6 +24,9 @@ class PortfolioCache
     public static function flush(): void
     {
         Cache::forever(self::VERSION_KEY, self::version() + 1);
+
+        // Whatever Portfolio memoized earlier in this request is stale now too.
+        app()->forgetInstance(Portfolio::class);
     }
 
     private static function key(string $key): string
