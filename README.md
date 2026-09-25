@@ -1,59 +1,174 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Key — Portfolio
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Personal portfolio for Muhammad Nafi Anzalulrahman, built as one Laravel app: a public
+site and an `/admin` panel where every piece of content is edited without touching code.
 
-## About Laravel
+- **Stack:** Laravel 12 · PHP 8.3+ · Blade · Tailwind CSS v4 · Alpine.js · GSAP + ScrollTrigger · Lenis · Vite · Pest
+- **Design brief:** [`docs/design.md`](docs/design.md) — palette, type, grid, motion rules
+- **Decisions & trade-offs:** [`docs/decisions.md`](docs/decisions.md)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requirements
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- PHP 8.3+ with `gd`, `pdo_sqlite` (or `pdo_mysql`), `fileinfo`, `mbstring`
+- Composer 2
+- Node 20+ and npm
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Install
 
-## Learning Laravel
+```bash
+git clone <repo-url> portfolio && cd portfolio
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+composer install
+cp .env.example .env
+php artisan key:generate
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+touch database/database.sqlite          # SQLite is the default
+php artisan migrate --seed              # schema + Key's starter content and placeholder images
+php artisan storage:link                # exposes uploads at /storage
 
-## Laravel Sponsors
+npm install
+npm run build                           # or `npm run dev` while working on the frontend
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Run it:
 
-### Premium Partners
+```bash
+composer run dev     # php artisan serve + queue + logs + vite, all at once
+# or just: php artisan serve
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Open <http://localhost:8000>. Set `APP_URL` in `.env` to the address you actually use,
+otherwise uploaded images will point at the wrong host.
 
-## Contributing
+## Admin account
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+There is no registration page. Create accounts from the command line:
 
-## Code of Conduct
+```bash
+php artisan admin:create
+# non-interactive:
+php artisan admin:create --name="Key" --email="you@example.com"   # password is prompted
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Passwords must be at least 12 characters. When `APP_ENV=local`, the seeder also creates
+`admin@example.com` / `password` for convenience; it never does in production.
 
-## Security Vulnerabilities
+Sign in at `/admin`. Five failed attempts per email + IP lock the form for a minute.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## What you can edit in `/admin`
 
-## License
+| Section      | Notes                                                                                   |
+| ------------ | --------------------------------------------------------------------------------------- |
+| Profile      | Name, nickname (the big hero word), headline, bios (markdown), photo, CV (PDF), "open to work" |
+| Projects     | Markdown description, tech-stack tags, thumbnail + gallery, links, publish/feature switches, drag to reorder |
+| Experience   | Type, dates (empty end date = "Present"), drag to reorder                                |
+| Skills       | Grouped by category; drag to reorder (order also drives the marquee)                    |
+| Certificates | Link or PDF, optional image; hidden on the site while empty                             |
+| Social links | Shown in the contact section and footer; drag to reorder                                |
+| Messages     | From the contact form; opening one marks it read                                        |
+| SEO          | Default meta title/description and Open Graph image (cropped to 1200×630)               |
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Images are validated (JPG/PNG/WebP, ≤ 5 MB, ≥ 200×200), converted to WebP, resized, and
+written with smaller `srcset` variants. Replacing or deleting an image removes the old
+files. Size presets live in `config/images.php`.
+
+## Environment
+
+| Key                                                     | Purpose                                                                 |
+| ------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `APP_URL`                                               | Absolute URLs for images, canonical links, OG tags and the sitemap      |
+| `APP_ENV`                                               | `production` enables indexing in `robots.txt` and disables strict-mode model checks |
+| `DB_CONNECTION`                                         | `sqlite` by default                                                     |
+| `CACHE_STORE`                                           | Public pages are cached; `database` works, `redis` is faster            |
+
+### Switching to MySQL
+
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=portfolio
+DB_USERNAME=portfolio
+DB_PASSWORD=secret
+```
+
+Then `php artisan migrate --seed`. Nothing in the code is SQLite-specific.
+
+## Tests
+
+```bash
+php artisan test        # or ./vendor/bin/pest
+```
+
+Covers admin auth (guests blocked, login throttling, `admin:create`), project CRUD with
+real image processing, upload validation, the contact form (validation, honeypot, rate
+limit), publish visibility on every public page, caching invalidation, sitemap and robots.
+
+## Deploy
+
+On the server:
+
+```bash
+composer install --no-dev --optimize-autoloader
+npm ci && npm run build
+php artisan migrate --force
+php artisan storage:link
+php artisan optimize          # caches config, routes, views, events
+php artisan admin:create
+```
+
+Set `APP_ENV=production`, `APP_DEBUG=false` and the correct `APP_URL`. Only seed if you
+want the starter content: `php artisan db:seed --class=PortfolioSeeder --force`.
+
+Point the web root at `public/`. Hashed assets in `public/build` and uploads in
+`public/storage` never change once written, so they can be cached for a year. An nginx
+example:
+
+```nginx
+server {
+    server_name example.com;
+    root /var/www/portfolio/public;
+    index index.php;
+
+    gzip on;
+    gzip_types text/css application/javascript application/json image/svg+xml application/xml text/plain;
+
+    location ~* ^/(build|storage)/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        try_files $uri =404;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+}
+```
+
+After deploying new code, run `php artisan optimize` again. Content edits in `/admin`
+invalidate the page cache on their own; no manual cache clear is needed.
+
+## Project layout
+
+```
+app/
+  Console/Commands/CreateAdmin.php     admin:create
+  Http/Controllers/Admin/              admin resource controllers
+  Http/Controllers/Site/               public pages, contact, sitemap, robots
+  Http/Requests/                       validation (Form Requests)
+  Models/Concerns/                     file cleanup, sortable ordering, cache flushing
+  Services/ImageUploadService.php      resize / crop / WebP / srcset variants
+  Support/Portfolio.php                cached read model for the public site
+resources/
+  css/app.css                          design tokens (@theme) and base styles
+  js/animations/                       one GSAP module per effect, lazy-loaded
+  js/admin/                            Alpine components for the admin
+  views/components/                    <x-image>, <x-section-heading>, <x-project-card>, <x-admin.*>
+  icons/                               Lucide SVGs used inline via <x-icon>
+```
