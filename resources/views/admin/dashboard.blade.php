@@ -1,7 +1,7 @@
 <x-admin.layout title="Dashboard">
     <x-admin.page-header title="Dashboard" description="What is live on the site, and what is waiting for you." />
 
-    <dl class="grid border-y border-line sm:grid-cols-3">
+    <dl class="grid border-b border-line sm:grid-cols-3">
         <div class="border-line py-6 sm:border-r sm:pr-6">
             <dt class="label-mono text-muted">Projects</dt>
             <dd class="mt-3 font-display text-6xl leading-none tabular-nums">{{ $projectCount }}</dd>
