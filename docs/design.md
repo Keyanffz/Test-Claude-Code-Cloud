@@ -48,7 +48,7 @@ Rules:
 - Display headlines: `letter-spacing: -0.02em`, `line-height: 0.9`, never bold (the serif has one weight — that's the point).
 - Body: 16–18px, `line-height: 1.55`, max 64ch.
 - Labels: Geist Mono 11–12px, uppercase, `letter-spacing: 0.08em`.
-- `font-feature-settings`: `"ss01", "cv11"` on Geist (single-storey a is off, straight-sided alternates on), `"tnum"` wherever numbers stack (years, counters, table columns).
+- `font-feature-settings`: `"kern", "liga", "calt"` globally; `"tnum"` wherever numbers stack (years, counters, table columns); `"case"` on uppercase mono labels so punctuation and parentheses sit at cap height.
 - Italic Instrument Serif is the only emphasis device in headlines.
 
 ## Grid

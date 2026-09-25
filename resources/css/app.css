@@ -70,3 +70,85 @@
     --raised: var(--color-stone-900);
     color-scheme: dark;
 }
+
+@layer base {
+    html {
+        background-color: var(--paper);
+        color: var(--ink);
+        font-family: var(--font-sans);
+        font-feature-settings: 'kern', 'liga', 'calt';
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
+
+    body {
+        min-height: 100dvh;
+    }
+
+    ::selection {
+        background-color: var(--signal);
+        color: var(--paper);
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--signal);
+        outline-offset: 3px;
+    }
+
+    button:not(:disabled),
+    [role='button'],
+    summary,
+    label[for],
+    select {
+        cursor: pointer;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+}
+
+@utility font-display {
+    font-family: var(--font-serif);
+    font-weight: 400;
+}
+
+@utility label-mono {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    line-height: var(--text-label--line-height);
+    letter-spacing: var(--text-label--letter-spacing);
+    text-transform: uppercase;
+    font-feature-settings: 'case', 'tnum';
+}
+
+@utility container-page {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: clamp(16px, 4vw, 56px);
+}
+
+@utility grid-page {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 16px;
+
+    @media (width >= 48rem) {
+        column-gap: 24px;
+    }
+}
+
+@utility link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.4s var(--ease-out-power3);
+
+    &:hover,
+    &:focus-visible {
+        background-size: 100% 1px;
+    }
+}
