@@ -75,7 +75,7 @@ Motion should explain structure (things enter in reading order) and reward atten
 
 - Durations 0.4–0.9s. Default ease `power3.out`; hero and page wipe use `expo.out` / `expo.inOut`.
 - Only `transform` and `opacity` are animated. No width/height/top/left.
-- Hero headline: word-level mask reveal (`yPercent: 110 → 0`), 0.06s stagger.
+- Hero headline: word-level mask reveal (`translateY(110%) → 0`), 0.06s stagger. Done in CSS so the LCP element never waits on JS (see decisions.md).
 - Scroll reveal: 24px rise + fade, triggered once at 85% viewport.
 - Project hover preview: follows cursor with `quickTo` (0.5s lag), desktop + fine pointer only.
 - Magnetic CTA: max 12px pull.

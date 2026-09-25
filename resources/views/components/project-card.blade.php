@@ -1,10 +1,11 @@
-@props(['project', 'index', 'wide' => false])
+@props(['project', 'index', 'wide' => false, 'eager' => false])
 
 <article {{ $attributes->class(['group relative']) }} data-reveal>
     <div @class(['overflow-hidden rounded-sm bg-raised', 'aspect-[4/3]' => ! $wide, 'aspect-[4/3] md:aspect-[16/10]' => $wide]) data-parallax-frame>
         <x-image
             :path="$project->thumbnail_path"
             preset="project_thumbnail"
+            :$eager
             alt=""
             :sizes="$wide ? '(min-width: 768px) 58vw, 100vw' : '(min-width: 768px) 42vw, 100vw'"
             class="size-full scale-110 object-cover transition-[filter] duration-700 group-hover:brightness-95"

@@ -9,7 +9,6 @@ Alpine.start();
 const animations = [
     ['[data-page-wipe]', () => import('./animations/page-transition')],
     ['body', () => import('./animations/lenis')],
-    ['[data-split]', () => import('./animations/hero')],
     ['[data-reveal]', () => import('./animations/reveal')],
     ['[data-preview-list]', () => import('./animations/cursor-preview')],
     ['[data-magnetic]', () => import('./animations/magnetic')],

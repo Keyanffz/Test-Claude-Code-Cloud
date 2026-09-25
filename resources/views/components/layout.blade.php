@@ -16,6 +16,9 @@
     <meta name="theme-color" content="#f2f0eb" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
     <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
+    {{-- The display face sets the hero's size; fetching it early keeps the swap from shifting the layout. --}}
+    <link rel="preload" href="{{ Vite::asset('node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ Vite::asset('node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
     {{ $head ?? '' }}
     @include('partials.theme-script')
     @vite(['resources/css/app.css', 'resources/js/app.js'])

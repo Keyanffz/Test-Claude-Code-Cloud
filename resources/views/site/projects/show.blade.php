@@ -1,6 +1,6 @@
 <x-layout :title="$project->title" :description="$project->summary" :image="$project->thumbnail_path" type="article">
     <article class="container-page pt-8 pb-24 md:pt-12" aria-labelledby="project-title">
-        <div class="grid-page label-mono text-muted" data-reveal>
+        <div class="grid-page label-mono text-muted rise">
             <a href="{{ route('projects.index') }}" class="col-span-6 inline-flex items-center gap-1.5 hover:text-ink md:col-span-3">
                 <x-icon name="arrow-left" :size="12" /> All work
             </a>
@@ -8,11 +8,11 @@
         </div>
 
         <header class="grid-page mt-16 gap-y-8 md:mt-24">
-            <h1 id="project-title" class="col-span-12 font-display text-display" data-split>{{ $project->title }}</h1>
-            <p class="col-span-12 text-xl leading-snug md:col-span-7 md:col-start-4 md:text-2xl" data-reveal>{{ $project->summary }}</p>
+            <h1 id="project-title" class="col-span-12 font-display text-display"><x-split-text :text="$project->title" /></h1>
+            <p class="col-span-12 text-xl leading-snug md:col-span-7 md:col-start-4 md:text-2xl rise" style="--rise-delay: 0.4s">{{ $project->summary }}</p>
         </header>
 
-        <dl class="grid-page mt-16 gap-y-6 border-t border-line pt-6" data-reveal>
+        <dl class="grid-page mt-16 gap-y-6 border-t border-line pt-6 rise" style="--rise-delay: 0.5s">
             @foreach (array_filter(['Role' => $project->role, 'Year' => $project->year]) as $term => $detail)
                 <div class="col-span-6 md:col-span-3 {{ $loop->first ? 'md:col-start-4' : '' }}">
                     <dt class="label-mono text-muted">{{ $term }}</dt>

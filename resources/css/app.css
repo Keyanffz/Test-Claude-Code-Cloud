@@ -250,10 +250,6 @@
  * <head>), so the page is fully readable without JavaScript.
  */
 @layer base {
-    .js [data-split] {
-        visibility: hidden;
-    }
-
     .js [data-reveal] {
         opacity: 0;
         transform: translateY(24px);
@@ -268,13 +264,70 @@
             transform: none;
         }
 
+        /* Hover slides and similar transitions become instant; the explicit fades stay. */
         *,
         *::before,
         *::after {
             transition-duration: 0.01ms !important;
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
         }
+    }
+}
+
+/*
+ * Above-the-fold entrances are pure CSS so they never wait on JavaScript (they are
+ * usually the LCP element). Split words rise behind a per-word mask; .rise is a
+ * small fade-up for supporting text.
+ */
+@layer components {
+    .split-word {
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: top;
+        /* Room for descenders (y, g, p) inside the mask without changing line height. */
+        padding-bottom: 0.12em;
+        margin-bottom: -0.12em;
+    }
+
+    .split-inner {
+        display: inline-block;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .split-inner {
+            animation: split-rise 0.9s var(--ease-out-expo) both;
+            animation-delay: calc(0.1s + var(--split-delay, 0s) + var(--i, 0) * 0.06s);
+        }
+
+        .rise {
+            animation: rise 0.8s var(--ease-out-power3) both;
+            animation-delay: var(--rise-delay, 0.2s);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .split-text,
+        .rise {
+            animation: fade 0.4s ease-out both;
+        }
+    }
+}
+
+@keyframes split-rise {
+    from {
+        transform: translateY(110%);
+    }
+}
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
     }
 }
 
